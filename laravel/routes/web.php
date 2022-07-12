@@ -14,8 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('site/films');
+})->name('films');
+
+Route::get('my-library', function (){
+    return view('site/my-library');
+})->name('my-library');
+
+Route::get('friends', function (){
+    return view('site/friends');
+})->name('friends');
+
+Route::get('chat', function (){
+    return view('site/chat');
+})->name('chat');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
