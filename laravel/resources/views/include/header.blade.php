@@ -1,7 +1,7 @@
-<header class="p-3 bg-dark text-white">
+<header id="header" class="p-3 text-white">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="#" class="float-start fw-bold link-light text-decoration-none">FilmWatcher</a>
+          <a href="#" class="float-start fw-bold link-light text-decoration-none"> <img width="30px" height="30px" src="/favicon.ico" alt="logo"> FilmWatcher</a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mx-auto">
           <li><a href="{{route('films')}}" class="nav-link px-2 text-white">Бібліотека фільмів</a></li>

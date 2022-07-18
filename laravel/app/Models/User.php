@@ -56,6 +56,11 @@ class User extends Authenticatable
         DB::table('relationship')->insert(['user_id' => $id_user, 'friend_id' => $id_person]);
     }
 
+    public function deletePersonFromFriends($id_friend){
+        $id_user = auth()->user()->id;
+        DB::table('relationship')->where('user_id', $id_user)->where('friend_id',  $id_friend)->delete();
+    }
+
     public function isFriend($id_friend){
         $id_user = auth()->user()->id;
         if(count(DB::table('relationship')

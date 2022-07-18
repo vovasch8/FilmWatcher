@@ -13,8 +13,13 @@ class UserController extends Controller
         $user->shareFilmToFriend($req->id_film, $req->id_friend);
     }
 
-    public function addPersonToFriendList($id_person){
+    public function addPersonToFriendList(Request $req){
         $user = new User();
-        $user->addPersonToFriend($id_person);
+        $user->addPersonToFriend($req->id_friend);
+    }
+
+    public function deletePersonFromFriendList(Request $req){
+        $user = new User();
+        $user->deletePersonFromFriends($req->id_friend);
     }
 }

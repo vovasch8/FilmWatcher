@@ -24,6 +24,8 @@ Route::post('searchFilms', "FilmController@searchFilms")->name('searchFilms');
 
 Route::get('friends', "CabinetController@showMyFriends")->middleware(['auth'])->name('friends');
 Route::post('searchFriends', "CabinetController@searchFriends")->middleware(['auth'])->name('searchFriends');
+Route::post('deleteFriend', "UserController@deletePersonFromFriendList")->middleware(['auth'])->name('deleteFriend');
+Route::post('addFriend', "UserController@addPersonToFriendList")->middleware(['auth'])->name('addFriend');
 Route::post('loadMoreMyFilms', "CabinetController@loadMoreMyFilms")->name('loadMoreMyFilms');
 Route::post('shareFilmToFriend', "UserController@shareFilmToFriend")->middleware(['auth'])->name('shareFilmToFriend');
 

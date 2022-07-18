@@ -16,7 +16,6 @@ class Library extends Model
     }
     public function deleteFilmFromLibrary($id_film){
         $id_user = auth()->user()->id;
-        echo $id_user . $id_film;
         DB::table('saved_films')->where('user_id', $id_user)->where('film_id',  $id_film)->delete();
     }
 
