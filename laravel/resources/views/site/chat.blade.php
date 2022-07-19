@@ -3,15 +3,15 @@
 @section("title-block") Чати @endsection
 
 @section("content")
-    <div class="container ">
+    <div class="container min-vh-100">
         <div class="row gx-5 ">
             <div class="col-lg-4 ">
-                <div class="bg-light mt-4 mb-4 border" style="height: auto; height: 76vh; overflow-x: hidden;">
+                <div class="bg-light mt-4 mb-4 border" style="height: auto; height: 90vh; overflow-x: hidden;">
                     <h3 class="text-center mt-3">Чати</h3>
                     <hr>
                     <div class="row mt-3">
                         @foreach($friends as $friend)
-                            <a href="" class="friend hstack mt-3 ms-5 link-dark text-decoration-none">
+                            <a href="{{route('chat', $friend->id)}}" class="friend hstack mt-3 ms-5 link-dark text-decoration-none">
                                 <img width="70px" height="70px" src="{{$friend->image}}" alt="friend" class="rounded-circle">
                                 <p class="fw-bold ms-3">{{$friend->name}}</p>
                             </a>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <div class="bg-light px-3 mt-4 mb-4 border" style="height: auto; max-height: 76vh; overflow-x: hidden;">
+                <div class="bg-light px-3 mt-4 mb-4 border" style="height: auto; height: 90vh; overflow-x: hidden;">
                     @foreach($messages as $message)
                         @if(auth()->user()->id != $message->user_id)
                              <div class="chat-entity row">

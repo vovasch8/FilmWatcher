@@ -17,7 +17,7 @@
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                         <li><a class="dropdown-item" href="{{route("myLibrary")}}">Моя бібліотека</a></li>
                         <li><a class="dropdown-item" href="{{route("friends")}}">Друзі</a></li>
-                        <li><a class="dropdown-item" href="{{route("chat")}}">Чати</a></li>
+                        <li><a class="dropdown-item" href="{{route("chats")}}">Чати</a></li>
                         @if(auth()->user()->isAdmin(auth()->user()->id))
                             <li><a class="dropdown-item" href="{{route("admin")}}">Адмін панель</a></li>
                         @endif

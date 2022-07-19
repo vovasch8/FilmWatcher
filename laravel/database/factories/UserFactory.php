@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'Test12345', // password
             'image' => $this->faker->imageUrl(),
-            'is_admin' => rand(0,1) ? false : true,
+            'role' => rand(0,1) ? 'user' : 'admin',
             'remember_token' => Str::random(10),
         ];
     }

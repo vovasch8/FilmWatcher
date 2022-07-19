@@ -71,13 +71,25 @@ class User extends Authenticatable
 
     public function isAdmin($id_user){
         $user = User::find($id_user);
-        if($user->is_admin)return true;
+        if($user->role == 'admin')return true;
         else return false;
     }
 
     public function getListOfFriends(){
         $id_user = auth()->user()->id;
         $user_relations = DB::table("relationship")->where('user_id', $id_user)->get();
+        $friends = [];
+        foreach ($user_relations as $relation){
+            $friends[] = User::find($relation->friend_id);
+        }
+        return $friends;
+    }
+
+    public function getListPeopleWithChat(){
+        $id_user = auth()->user()->id;
+        $user_relations = DB::table("relationship")
+            ->where('user_id', $id_user)
+            ->orWhere('friend_id', $id_user)->get();
         $friends = [];
         foreach ($user_relations as $relation){
             $friends[] = User::find($relation->friend_id);
@@ -94,4 +106,5 @@ class User extends Authenticatable
             ->skip($count * $skip)
             ->take($count)->get();
     }
+
 }

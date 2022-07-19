@@ -50,6 +50,11 @@
             @endforeach
 
         </div>
+        <div class="row">
+            <button onclick="loadContent(this)" id="load-more" style="width: 200px"
+                    class="btn btn-dark mx-auto mt-3 mb-3">Загрузити ще...
+            </button>
+        </div>
     </div>
 @endsection
 

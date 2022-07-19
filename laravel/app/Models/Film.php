@@ -28,6 +28,15 @@ class Film extends Model
 
     public function getListOfFilms($type = 'film', $skip = 0, $count = 18){
         $film = new Film();
-        return $film->all()->where('type', '=', $type)->skip($count * $skip)->sortByDesc('id')->take($count);
+        return $film->all()->where('type', '=', $type)->sortByDesc('id')->skip($count * $skip)->take($count);
+    }
+
+    public function getFilmsOfUser($id_user, $type = "film", $skip = 0, $count = 18){
+        return DB::table('films')->join('saved_films', 'films.id', '=', 'saved_films.film_id')
+            ->where('user_id', $id_user)
+            ->where('type', '=', $type)
+            ->orderBy('saved_films.created_at', 'desc')
+            ->skip($count * $skip)
+            ->take($count)->get();
     }
 }

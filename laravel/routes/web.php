@@ -15,25 +15,32 @@ use App\Models\Controller;
 */
 
 Route::get('/', "FilmController@showFilms")->name('films');
-Route::get('myLibrary', "CabinetController@showMyLibrary")->middleware(['auth'])->name('myLibrary');
 Route::get('film/{id}', "FilmController@showFilm")->name('film');
-Route::post('addFilmToLibrary', "LibraryController@addFilmToMyLibrary")->middleware(['auth'])->name('addFilmToLibrary');
-Route::post('deleteFilmFromLibrary', "LibraryController@deleteFilmFromLibrary")->middleware(['auth'])->name('deleteFilmFromLibrary');
 Route::post('loadMoreFilms', "FilmController@loadMoreFilms")->name('loadMoreFilms');
 Route::post('searchFilms', "FilmController@searchFilms")->name('searchFilms');
+
+Route::get('myLibrary', "CabinetController@showMyLibrary")->middleware(['auth'])->name('myLibrary');
+Route::post('addFilmToLibrary', "LibraryController@addFilmToMyLibrary")->middleware(['auth'])->name('addFilmToLibrary');
+Route::post('deleteFilmFromLibrary', "LibraryController@deleteFilmFromLibrary")->middleware(['auth'])->name('deleteFilmFromLibrary');
+
+Route::post('loadMoreMyFilms', "CabinetController@loadMoreMyFilms")->middleware(['auth'])->name('loadMoreMyFilms');
+Route::post('shareFilmToFriend', "UserController@shareFilmToFriend")->middleware(['auth'])->name('shareFilmToFriend');
 
 Route::get('friends', "CabinetController@showMyFriends")->middleware(['auth'])->name('friends');
 Route::post('searchFriends', "CabinetController@searchFriends")->middleware(['auth'])->name('searchFriends');
 Route::post('deleteFriend', "UserController@deletePersonFromFriendList")->middleware(['auth'])->name('deleteFriend');
 Route::post('addFriend', "UserController@addPersonToFriendList")->middleware(['auth'])->name('addFriend');
-Route::post('loadMoreMyFilms', "CabinetController@loadMoreMyFilms")->name('loadMoreMyFilms');
-Route::post('shareFilmToFriend', "UserController@shareFilmToFriend")->middleware(['auth'])->name('shareFilmToFriend');
 
-Route::get('chat', 'CabinetController@showChats')->middleware(['auth'])->name('chat');
+Route::get('chats', 'CabinetController@showChats')->middleware(['auth'])->name('chats');
+Route::get('chat/{id}', 'CabinetController@showChats')->middleware(['auth'])->name('chat');
+
 Route::get('admin', 'AdminController@index')->middleware(['auth'])->name('admin');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('editUser', 'AdminController@editUser')->middleware(['auth'])->name('editUser');
+Route::get('addBan', 'AdminController@addBan')->middleware(['auth'])->name('addBan');
+Route::get('deleteBan/{id}', 'AdminController@deleteBan')->middleware(['auth'])->name('deleteBan');
+Route::get('manage/{id}', 'AdminController@manageLibrary')->middleware(['auth'])->name('manage');
+Route::post('loadMoreManageFilms', 'AdminController@loadMoreManageFilms')->middleware(['auth'])->name('loadMoreManageFilms');
+Route::post('deleteFilmFromManageLibrary', 'AdminController@deleteFilmFromManageLibrary')->middleware(['auth'])->name('deleteFilmFromManageLibrary');
+Route::post('addFilmToManageLibrary', 'AdminController@addFilmToManageLibrary')->middleware(['auth'])->name('addFilmToManageLibrary');
 
 require __DIR__.'/auth.php';

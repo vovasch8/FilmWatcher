@@ -14,7 +14,8 @@ class FilmController extends Controller
     public function showFilms(){
         $film = new Film();
         $user = new User();
-        $friends = $user->getListOfFriends();
+        $friends = [];
+        if(auth()->user()) $friends = $user->getListOfFriends();
         $films = $film->getListOfFilms();
         return view('site/films', ["films" => $films, 'friends' => $friends]);
     }
@@ -24,14 +25,16 @@ class FilmController extends Controller
     }
     public function loadMoreFilms(Request $req){
         $user = new User();
-        $friends = $user->getListOfFriends();
+        $friends = [];
+        if(auth()->user()) $friends = $user->getListOfFriends();
         $film = new Film();
         $films = $film->getListOfFilms($req->category, $req->counter);
         return view('ajax/films', ['films' => $films, 'friends' => $friends]);
     }
     public function searchFilms(Request $req){
         $user = new User();
-        $friends = $user->getListOfFriends();
+        $friends = [];
+        if(auth()->user()) $friends = $user->getListOfFriends();
 
         echo view('ajax/films')->with(['films' => (DB::table('films')
             ->where('name', 'LIKE',"%$req->search%")->get())

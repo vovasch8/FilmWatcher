@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ban;
 use App\Models\Film;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CabinetController extends Controller
 {
     public function showMyLibrary(){
+        $ban = $this->checkBan();
+        if($ban) return view('site/ban', ['message' => $ban->message]);
+
         $user = new User();
         $films = $user->getMyFilms();
         $friends = $user->getListOfFriends();
         return view('site/my-library', ["films" => $films, 'friends' => $friends]);
     }
     public function showMyFriends(){
+        $ban = $this->checkBan();
+        if($ban) return view('site/ban', ['message' => $ban->message]);
+
         $user = new User;
         $friends = $user->getListOfFriends();
         return view('site/friends', ["friends" => $friends]);
@@ -28,11 +36,19 @@ class CabinetController extends Controller
             ->where('name', 'LIKE',"%$req->search%")
                 ->where('id', '!=', $id_user)->get()))]);
     }
-    public function showChats(){
+    public function showChats($id_friend = 0){
+        $ban = $this->checkBan();
+        if($ban) return view('site/ban', ['message' => $ban->message]);
+
         $user = new User;
         $message = new Message();
-        $friends = $user->getListOfFriends();
-        $messages = $message->getListOfMessage($friends[0]->id);
+        $friends = $user->getListPeopleWithChat();
+        if(!$id_friend){
+            $messages = $message->getListOfMessage($friends[0]->id);
+        }else{
+            $messages = $message->getListOfMessage($id_friend);
+        }
+
         return view('site/chat',['friends' => $friends, 'messages' => $messages]);
     }
 
@@ -45,5 +61,13 @@ class CabinetController extends Controller
         $film = new Film();
         $films = $user->getMyFilms($req->category, $req->counter);
         return view('ajax/films', ['films' => $films, 'friends' => $friends]);
+    }
+
+    public function checkBan(){
+        if(!Gate::allows('ban', auth()->user())){
+            $ban = new Ban();
+            $ban = $ban->all()->where('user_id', '=', auth()->user()->id)->first();
+            return $ban;
+        }else return false;
     }
 }

@@ -11,7 +11,7 @@
                 <hr>
                 <h5>Опис фільму</h5>
                 <p class="float-left">{{$film->description}}</p>
-                <p><span class="fw-bold">Жанр:</span> {{$film->genre}} <span class="fw-bold"> Рік випуску:</span> {{$film->year}}</p>
+                <p><span class="fw-bold">Жанр:</span> {{$film->genre}} <span class="fw-bold"> Рік випуску:</span> {{$film->year}} <span class="fw-bold">Id:</span> {{$film->id}}</p>
             </div>
             <div class="col-lg-6">
                 <h4 class="text-center">Трейлер</h4>
