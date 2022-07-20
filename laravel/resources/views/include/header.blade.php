@@ -15,14 +15,15 @@
                         <img src="{{auth()->user()->image}}" alt="mdo" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="{{route("myLibrary")}}">Моя бібліотека</a></li>
-                        <li><a class="dropdown-item" href="{{route("friends")}}">Друзі</a></li>
-                        <li><a class="dropdown-item" href="{{route("chats")}}">Чати</a></li>
+                        <li><a class="dropdown-item" href="{{route("profile")}}"><i class="bi bi-person-circle"></i> Мій профіль</a></li>
+                        <li><a class="dropdown-item" href="{{route("myLibrary")}}"><i class="bi bi-collection-fill"></i> Моя бібліотека</a></li>
+                        <li><a class="dropdown-item" href="{{route("friends")}}"><i class="bi bi-people-fill"></i> Друзі</a></li>
+                        <li><a class="dropdown-item" href="{{route("chats")}}"><i class="bi bi-chat-fill"></i> Чати</a></li>
                         @if(auth()->user()->isAdmin(auth()->user()->id))
-                            <li><a class="dropdown-item" href="{{route("admin")}}">Адмін панель</a></li>
+                            <li><a class="dropdown-item" href="{{route("admin")}}"><i class="bi bi-incognito"></i> Адмін панель</a></li>
                         @endif
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{route('logout')}}">Вийти</a></li>
+                        <li><a class="dropdown-item" href="{{route('logout')}}"><i class="bi bi-box-arrow-right"></i> Вийти</a></li>
                     </ul>
                 </div>
             @else

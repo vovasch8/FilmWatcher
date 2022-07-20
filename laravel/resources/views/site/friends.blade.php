@@ -16,6 +16,10 @@
         </div>
         <div class="row">
                 <div id="friends" class="row">
+                    @if(!count($friends)) <img class="text-center mx-auto" style="width: 400px; height: 400px;"
+                                             src="https://static.wixstatic.com/media/ca6d89_e51a9826be3342be971c3be10d659c29~mv2.jpg/v1/fill/w_560,h_560,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/Image-empty-state.jpg"
+                                               alt="Empty">
+                    @endif
                     @foreach($friends as $friend)
                         <div data-id_friend="{{$friend->id}}" class="col-lg-6 mt-4 friend">
                             <div class="hstack mx-auto px-5  bg-light border">

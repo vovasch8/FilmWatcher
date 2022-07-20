@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\Gate;
 
 class CabinetController extends Controller
 {
+
+    public function showProfile(){
+        return view('site/profile', ['user' => auth()->user()]);
+    }
+    public function editProfile(Request $req){
+        $user = auth()->user();
+        $user->image = $req->avatar;
+
+        $user->save();
+        return redirect()->route('profile', ['user' => auth()->user()]);
+    }
     public function showMyLibrary(){
         $ban = $this->checkBan();
         if($ban) return view('site/ban', ['message' => $ban->message]);
@@ -44,7 +55,8 @@ class CabinetController extends Controller
         $message = new Message();
         $friends = $user->getListPeopleWithChat();
         if(!$id_friend){
-            $messages = $message->getListOfMessage($friends[0]->id);
+            if(isset($friends[0])) $messages = $message->getListOfMessage($friends[0]->id);
+            else $messages = [];
         }else{
             $messages = $message->getListOfMessage($id_friend);
         }

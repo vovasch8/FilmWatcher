@@ -7,8 +7,9 @@
         <div class="row">
             <div class="tabs col-lg-4">
                 <ul id="category" data-active="film" class="nav nav-tabs" style="width: 202px">
-                    <li  class="nav-item type-films">
-                        <a id="film" class="nav-link active link-dark" aria-current="page" href="#" onclick="categorySwitcher(this)">Фільми</a>
+                    <li class="nav-item type-films">
+                        <a id="film" class="nav-link active link-dark" aria-current="page" href="#"
+                           onclick="categorySwitcher(this)">Фільми</a>
                     </li>
                     <li class="nav-item type-films">
                         <a id="serial" class="nav-link link-dark" href="#" onclick="categorySwitcher(this)">Серіали</a>
@@ -21,9 +22,12 @@
             </div>
         </div>
         <div id="main-content" class="row">
+            @if(!count($films)) <img class="text-center mx-auto mt-5" style="width: 300px; height: 300px;"
+                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi8Y6jlyyGKX4Xok7Q6ro0TwI-hCCHLP1zovBevgm_JsTiTnbQXbT9UMCt2YOhDBOjHwo&usqp=CAU"
+                                     alt="Empty"> <h4 class="fw-bold text-center">Бібліотека пуста</h4>@endif
             @foreach($films as $film)
                 <div class="col-lg-4 mt-4 film-col">
-                    <div class="card" >
+                    <div class="card">
                         <img src="{{$film->image}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{$film->name}}</h5>
@@ -31,14 +35,22 @@
                             <div class="btn-panel d-flex">
                                 <a href="{{route('film', $film->id)}}" class="btn btn-outline-dark">Переглянути</a>
                                 <div data-id_film="{{$film->id}}" class="btn-group ms-auto">
-                                    <i onclick="deleteFilm(this)" class="bi bi-x-circle btn btn-outline-dark" style="font-size: 18px;"></i>
-                                    <i class="bi bi-send btn btn-outline-dark" style="font-size: 18px;" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                    <ul class="dropdown-menu" style="height: auto; max-height: 150px; overflow-x: hidden;">
+                                    <i onclick="deleteFilm(this)" class="bi bi-x-circle btn btn-outline-dark"
+                                       style="font-size: 18px;"></i>
+                                    <i class="bi bi-send btn btn-outline-dark" style="font-size: 18px;"
+                                       data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                    <ul class="dropdown-menu"
+                                        style="height: auto; max-height: 150px; overflow-x: hidden;">
                                         @if(!$friends)
-                                            <li><a class="dropdown-item" >У вас ще немає друзів</a></li>
+                                            <li><a class="dropdown-item">У вас ще немає друзів</a></li>
                                         @else
                                             @foreach($friends as $friend)
-                                                <li><a onclick="shareFilm(this)" data-id_friend="{{$friend->id}}" class="dropdown-item" href="#"><img width="30px" height="30px" class="rounded-circle" src="{{$friend->image}}" alt="avatar"> {{$friend->name}}</a></li>
+                                                <li><a onclick="shareFilm(this)" data-id_friend="{{$friend->id}}"
+                                                       class="dropdown-item" href="#"><img width="30px" height="30px"
+                                                                                           class="rounded-circle"
+                                                                                           src="{{$friend->image}}"
+                                                                                           alt="avatar"> {{$friend->name}}
+                                                    </a></li>
                                             @endforeach
                                         @endif
                                     </ul>
@@ -50,71 +62,74 @@
             @endforeach
 
         </div>
-        <div class="row">
-            <button onclick="loadContent(this)" id="load-more" style="width: 200px"
-                    class="btn btn-dark mx-auto mt-3 mb-3">Загрузити ще...
-            </button>
-        </div>
+        @if(count($films))
+            <div class="row">
+                <button onclick="loadContent(this)" id="load-more" style="width: 200px"
+                        class="btn btn-dark mx-auto mt-3 mb-3">Загрузити ще...
+                </button>
+            </div>
+        @endif
     </div>
 @endsection
 
 <script>
-        //switch type of films
-        function categorySwitcher(el){
-            $('#film').removeClass('active');
-            $('#serial').removeClass('active');
-            $(el).addClass('active');
-            $(el).closest('#category').attr('data-active', $(el).attr('id'));
-            loadContent(el);
-        }
+    //switch type of films
+    function categorySwitcher(el) {
+        $('#film').removeClass('active');
+        $('#serial').removeClass('active');
+        $(el).addClass('active');
+        $(el).closest('#category').attr('data-active', $(el).attr('id'));
+        loadContent(el);
+    }
 
-        //load more content ajax
-        var counter = 0;
-        function loadContent(el){
+    //load more content ajax
+    var counter = 0;
 
-            if(el.closest('#category'))counter = 0;
-            else counter++;
+    function loadContent(el) {
 
-            let block = document.getElementById('main-content');
+        if (el.closest('#category')) counter = 0;
+        else counter++;
 
-            let category = $('#category').attr('data-active');
+        let block = document.getElementById('main-content');
 
-            $.ajax({
-                type:'POST',
-                url:"{{ route('loadMoreMyFilms') }}",
-                data: {"_token": $('meta[name="csrf-token"]').attr('content'), "counter" : counter, "category" : category},
-                success: function (response) {
-                    if(counter === 0)block.innerHTML = response;
-                    else block.innerHTML = block.innerHTML + response;
-                }
-            });
-        }
+        let category = $('#category').attr('data-active');
 
-    function deleteFilm (el){
-        let id_film = $(el).parent().attr('data-id_film');
-        console.log(id_film);
         $.ajax({
-            type:'POST',
-            url:"{{ route('deleteFilmFromLibrary') }}",
-            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_film" : id_film},
+            type: 'POST',
+            url: "{{ route('loadMoreMyFilms') }}",
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "counter": counter, "category": category},
             success: function (response) {
-                 $(el).closest('.film-col').remove();
+                if (counter === 0) block.innerHTML = response;
+                else block.innerHTML = block.innerHTML + response;
             }
         });
     }
 
-        //share film to friend
-        function shareFilm (el){
-            let id_film = $(el).closest('.btn-group').attr('data-id_film');
-            let id_friend = $(el).attr('data-id_friend');
-            console.log((id_film + id_friend));
-            $.ajax({
-                type:'POST',
-                url:"{{ route('shareFilmToFriend') }}",
-                data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_film" : id_film, "id_friend" : id_friend},
-                success: function (response) {
-                    console.log(response);
-                }
-            });
-        }
+    function deleteFilm(el) {
+        let id_film = $(el).parent().attr('data-id_film');
+        console.log(id_film);
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('deleteFilmFromLibrary') }}",
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_film": id_film},
+            success: function (response) {
+                $(el).closest('.film-col').remove();
+            }
+        });
+    }
+
+    //share film to friend
+    function shareFilm(el) {
+        let id_film = $(el).closest('.btn-group').attr('data-id_film');
+        let id_friend = $(el).attr('data-id_friend');
+        console.log((id_film + id_friend));
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('shareFilmToFriend') }}",
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_film": id_film, "id_friend": id_friend},
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
 </script>

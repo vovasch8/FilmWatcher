@@ -19,6 +19,9 @@ Route::get('film/{id}', "FilmController@showFilm")->name('film');
 Route::post('loadMoreFilms', "FilmController@loadMoreFilms")->name('loadMoreFilms');
 Route::post('searchFilms', "FilmController@searchFilms")->name('searchFilms');
 
+Route::get('profile', "CabinetController@showProfile")->middleware(['auth'])->name('profile');
+Route::get('editProfile', "CabinetController@editProfile")->middleware(['auth'])->name('editProfile');
+
 Route::get('myLibrary', "CabinetController@showMyLibrary")->middleware(['auth'])->name('myLibrary');
 Route::post('addFilmToLibrary', "LibraryController@addFilmToMyLibrary")->middleware(['auth'])->name('addFilmToLibrary');
 Route::post('deleteFilmFromLibrary', "LibraryController@deleteFilmFromLibrary")->middleware(['auth'])->name('deleteFilmFromLibrary');

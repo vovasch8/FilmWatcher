@@ -21,6 +21,10 @@
             </div>
             <div class="col-lg-8">
                 <div class="bg-light px-3 mt-4 mb-4 border" style="height: auto; height: 90vh; overflow-x: hidden;">
+                    @if(!count($messages)) <div class="text-center mx-auto mt-4"><img class="text-center mx-auto mt-5" style="width: 300px; height: 300px;"
+                                               src="https://cdn-icons-png.flaticon.com/512/4565/4565014.png"
+                                            </div>
+                    @endif
                     @foreach($messages as $message)
                         @if(auth()->user()->id != $message->user_id)
                              <div class="chat-entity row">
