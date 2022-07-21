@@ -36,8 +36,10 @@ Route::post('addFriend', "UserController@addPersonToFriendList")->middleware(['a
 
 Route::get('chats', 'CabinetController@showChats')->middleware(['auth'])->name('chats');
 Route::get('chat/{id}', 'CabinetController@showChats')->middleware(['auth'])->name('chat');
+Route::post('loadMoreMessages', 'CabinetController@loadMoreMessages')->middleware(['auth'])->name('loadMoreMessages');
 
 Route::get('admin', 'AdminController@index')->middleware(['auth'])->name('admin');
+Route::get('addFilmToCollection', 'AdminController@addFilmToCollection')->middleware(['auth'])->name('addFilmToCollection');
 Route::get('editUser', 'AdminController@editUser')->middleware(['auth'])->name('editUser');
 Route::get('addBan', 'AdminController@addBan')->middleware(['auth'])->name('addBan');
 Route::get('deleteBan/{id}', 'AdminController@deleteBan')->middleware(['auth'])->name('deleteBan');

@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function shareFilmToFriend($id_film, $id_friend){
         $id_user = auth()->user()->id;
-        DB::table('message')->insert(['user_id' => $id_user, 'friend_id' => $id_friend, 'film_id' => $id_film]);
+        DB::table('message')->insert(['user_id' => $id_user, 'friend_id' => $id_friend, 'film_id' => $id_film, 'created_at' => now()]);
     }
 
     public function addPersonToFriend($id_person){
@@ -92,9 +92,39 @@ class User extends Authenticatable
             ->orWhere('friend_id', $id_user)->get();
         $friends = [];
         foreach ($user_relations as $relation){
-            $friends[] = User::find($relation->friend_id);
+            if($id_user == $relation->friend_id){
+                $user = User::find($relation->user_id);
+            }else{
+                 $user = User::find($relation->friend_id);
+            }
+            if($this->getLastMessage($user->id)) {
+                $user->setAttribute('lastMessage', ($this->getLastMessage($user->id)->created_at));
+                $user->setAttribute('isReaded', ($this->getLastMessage($user->id)->is_readed));
+            }else {
+                $user->setAttribute('lastMessage', '2000-07-20 17:13:49');
+                $user->setAttribute('isReaded', true);
+            }
+            $friends[] = $user;
         }
+        $friends = array_unique($friends);
         return $friends;
+    }
+
+
+    public function getLastMessage($id_friend){
+        $id_user = auth()->user()->id;
+        $message = DB::table('message')
+            ->where('friend_id', $id_user)->where('user_id', $id_friend)
+            ->orderBy('created_at', 'desc')->first();
+        return $message;
+    }
+
+    public function setConversationAsReaded($id_friend){
+        $id_user = auth()->user()->id;
+
+        DB::table('message')
+            ->where('friend_id', $id_user)->where('user_id', $id_friend)
+            ->orderBy('created_at', 'desc')->limit(1)->update(['is_readed' => true]);
     }
 
     public function getMyFilms($type = "film", $skip = 0, $count = 18){

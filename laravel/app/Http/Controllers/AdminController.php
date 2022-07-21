@@ -65,4 +65,22 @@ class AdminController extends Controller
         $library = new Library();
         $library->addFilmToLibrary($req->id_user, $req->id_film);
     }
+
+    public function addFilmToCollection(Request $req){
+        $film = new Film();
+        $film->name = $req->name;
+        $film->type = $req->type;
+        $film->description = $req->description;
+        $film->image = $req->image;
+        $film->year = $req->year;
+        $film->genre = $req->genre;
+        $film->trailer = $req->video;
+
+        $film->save();
+
+        $user = new User();
+        $users = $user->all();
+
+        return redirect()->route('admin', ['users' => $users])->with('success', 'Фільм додано успішно!');
+    }
 }

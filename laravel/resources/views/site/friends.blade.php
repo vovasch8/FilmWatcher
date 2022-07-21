@@ -3,7 +3,7 @@
 @section("title-block") Друзі @endsection
 
 @section("content")
-    <div class="container min-vh-100">
+    <div class="container min-vh-100 mb-3">
         <div class="row mt-4">
             <div class="col-lg-6 offset-lg-3">
                 <h4 class="text-center">Люди на яких ви підписані</h4>
@@ -22,7 +22,7 @@
                     @endif
                     @foreach($friends as $friend)
                         <div data-id_friend="{{$friend->id}}" class="col-lg-6 mt-4 friend">
-                            <div class="hstack mx-auto px-5  bg-light border">
+                            <div class="hstack mx-auto px-5 py-1  bg-light border">
                                 <img width="70px" height="70px" src="{{$friend->image}}" alt="friend" class="rounded-circle">
                                 <p class="fw-bold ms-3">{{$friend->name}}</p>
                                 <button onclick="deleteFriend(this)" class="btn btn-success ms-auto"><i class="bi bi-check"></i> Друзі</button>

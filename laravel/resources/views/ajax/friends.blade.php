@@ -1,6 +1,6 @@
 @foreach($friends as $friend)
     <div class="col-lg-6 mt-4 friend" data-id_friend="{{$friend->id}}">
-        <div class="hstack mx-auto px-5  bg-light border">
+        <div class="hstack mx-auto px-5 py-1 bg-light border">
             <img width="70px" height="70px" src="{{$friend->image}}" alt="friend" class="rounded-circle">
             <p class="fw-bold ms-3">{{$friend->name}}</p>
                 @if(auth()->user()->isFriend($friend->id))

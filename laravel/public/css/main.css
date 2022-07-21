@@ -4,3 +4,7 @@
 .avatar:hover{
     border: 1px solid #0c5460;
 }
+
+.dropdown-item{
+    cursor: pointer;
+}

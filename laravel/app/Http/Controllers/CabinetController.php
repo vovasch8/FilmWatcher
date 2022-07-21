@@ -17,10 +17,12 @@ class CabinetController extends Controller
         return view('site/profile', ['user' => auth()->user()]);
     }
     public function editProfile(Request $req){
-        $user = auth()->user();
-        $user->image = $req->avatar;
+        if($req->avatar) {
+            $user = auth()->user();
+            $user->image = $req->avatar;
 
-        $user->save();
+            $user->save();
+        }
         return redirect()->route('profile', ['user' => auth()->user()]);
     }
     public function showMyLibrary(){
@@ -51,20 +53,30 @@ class CabinetController extends Controller
         $ban = $this->checkBan();
         if($ban) return view('site/ban', ['message' => $ban->message]);
 
-        $user = new User;
+        $user = new User();
         $message = new Message();
         $friends = $user->getListPeopleWithChat();
+        usort($friends, function($m1,$m2) {
+                if ($m1->lastMessage == $m2->lastMessage) return 0;
+                return ($m1->lastMessage > $m2->lastMessage) ? -1 : 1;
+        });
+
         if(!$id_friend){
-            if(isset($friends[0])) $messages = $message->getListOfMessage($friends[0]->id);
+            if(isset($friends[0])){ $messages = $message->getListOfMessage($friends[0]->id); $user->setConversationAsReaded($friends[0]->id);}
             else $messages = [];
         }else{
+            $user->setConversationAsReaded($id_friend);
             $messages = $message->getListOfMessage($id_friend);
         }
 
-        return view('site/chat',['friends' => $friends, 'messages' => $messages]);
+        return view('site/chat',['friends' => $friends, 'messages' => $messages, 'current_user' => $id_friend]);
     }
 
-    public function loadMoreMessage(){
+    public function loadMoreMessages(Request $req){
+        $message = new Message();
+        $messages = $message->getListOfMessage($req->id_user, $req->counter);
+
+        return view('ajax/messages', ['messages' => $messages]);
 
     }
     public function loadMoreMyFilms(Request $req){

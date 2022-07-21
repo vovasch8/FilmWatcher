@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('image')->default('https://s2.afisha.ru/mediastorage/f8/40/44c361537e354921a5a5266240f8.jpg');
+            $table->string('image')->default('/avatars/4.jpg');
             $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();

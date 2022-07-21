@@ -46,7 +46,7 @@
                                         @else
                                             @foreach($friends as $friend)
                                                 <li><a onclick="shareFilm(this)" data-id_friend="{{$friend->id}}"
-                                                       class="dropdown-item" href="#"><img width="30px" height="30px"
+                                                       class="dropdown-item"><img width="30px" height="30px"
                                                                                            class="rounded-circle"
                                                                                            src="{{$friend->image}}"
                                                                                            alt="avatar"> {{$friend->name}}

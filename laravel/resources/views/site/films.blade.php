@@ -30,7 +30,7 @@
             @foreach($films as $film)
                 <div class="col-lg-4 mt-4">
                     <div class="card">
-                        <img src="{{$film->image}}" class="card-img-top" alt="...">
+                        <img height="310px" src="{{$film->image}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{$film->name}}</h5>
                             <p style="min-height: 95px;" class="card-text">{{substr($film->description, 0, 150)}}</p>
@@ -57,8 +57,8 @@
                                                 @else
                                                     @foreach($friends as $friend)
                                                         <li><a onclick="shareFilm(this)"
-                                                               data-id_friend="{{$friend->id}}" class="dropdown-item"
-                                                               href="#"><img width="30px" height="30px"
+                                                               data-id_friend="{{$friend->id}}" class="dropdown-item">
+                                                                <img width="30px" height="30px"
                                                                              class="rounded-circle"
                                                                              src="{{$friend->image}}"
                                                                              alt="avatar"> {{$friend->name}}</a></li>

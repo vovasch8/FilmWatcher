@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->text('description');
-            $table->text('actors');
             $table->string('image');
             $table->year('year');
             $table->string('genre');

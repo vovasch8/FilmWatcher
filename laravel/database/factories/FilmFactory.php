@@ -23,7 +23,6 @@ class FilmFactory extends Factory
             'name' => $this->faker->word(),
             'type' => rand(0,1) ? "film" : "serial",
             'description' => $this->faker->text(250),
-            'actors' => $this->faker->text(100),
             'image' => $this->faker->imageUrl(),
             'year' => $this->faker->year(),
             'genre' => $this->faker->word(),
