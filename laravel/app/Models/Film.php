@@ -39,4 +39,8 @@ class Film extends Model
             ->skip($count * $skip)
             ->take($count)->get();
     }
+
+    public function getCountFilms(){
+        return DB::table('films')->count();
+    }
 }

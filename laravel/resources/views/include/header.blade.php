@@ -20,7 +20,9 @@
                         <li><a class="dropdown-item" href="{{route("friends")}}"><i class="bi bi-people-fill"></i> Друзі</a></li>
                         <li><a class="dropdown-item" href="{{route("chats")}}"><i class="bi bi-chat-fill"></i> Чати</a></li>
                         @if(auth()->user()->isAdmin(auth()->user()->id))
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{route("admin")}}"><i class="bi bi-incognito"></i> Адмін панель</a></li>
+                            <li><a class="dropdown-item" href="{{route("api_index")}}"><i class="bi bi-window-fullscreen"></i> Аpi сайту</a></li>
                         @endif
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{route('logout')}}"><i class="bi bi-box-arrow-right"></i> Вийти</a></li>

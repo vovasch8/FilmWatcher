@@ -23,10 +23,7 @@ class Message extends Model
 
         $messages = $messages->toArray();
 
-        usort($messages, function($m1,$m2) {
-            if ($m1->created_at == $m2->created_at) return 0;
-            return ($m1->created_at > $m2->created_at) ? -1 : 1;
-        });
+        $messages = array_reverse($messages);
 
         return $messages;
     }

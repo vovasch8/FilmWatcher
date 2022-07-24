@@ -137,4 +137,8 @@ class User extends Authenticatable
             ->take($count)->get();
     }
 
+    public function getCountUsers(){
+       return DB::table('users')->count();
+    }
+
 }
